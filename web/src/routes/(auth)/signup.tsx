@@ -63,19 +63,18 @@ function RouteComponent() {
       <GeometricPattern />
       <WaveDecoration />
       <div className="w-full max-w-md relative">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center mb-4 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#F97316] to-[#8B5CF6] rounded-2xl blur-xl opacity-30"></div>
-            <div className="w-20 h-20 bg-gradient-to-br from-[#F97316] to-[#8B5CF6] rounded-2xl shadow-xl flex items-center justify-center relative">
-              <span className="text-white text-4xl font-bold">IJ</span>
-            </div>
-          </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#F97316] to-[#8B5CF6] bg-clip-text text-transparent">InmiJobs</h1>
-          <p className="text-[#6B7280] mt-3 text-lg">Crea tu cuenta</p>
-        </div>
-        
         <div className="bg-white/90 backdrop-blur-sm border border-white/30 rounded-3xl shadow-2xl p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center mb-4 relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#F97316] to-[#8B5CF6] rounded-2xl blur-xl opacity-30"></div>
+                <div className="w-20 h-20 bg-gradient-to-br from-[#F97316] to-[#8B5CF6] rounded-2xl shadow-xl flex items-center justify-center relative">
+                  <span className="text-white text-4xl font-bold">IJ</span>
+                </div>
+              </div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-[#F97316] to-[#8B5CF6] bg-clip-text text-transparent">InmiJobs</h1>
+              <p className="text-[#6B7280] mt-3 text-lg">Crea tu cuenta</p>
+            </div>
             {["name", "email", "password"].map((field) => (
               <div key={field}>
                 <label className="block text-sm font-semibold text-[#6B7280] mb-2">
