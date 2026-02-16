@@ -22,8 +22,6 @@ type User struct {
 	Profile  *Profile  `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
-
-
 	ConnectionsSent     []Connection `gorm:"foreignKey:RequesterID"`
 	ConnectionsReceived []Connection `gorm:"foreignKey:ReceiverID"`
 }
