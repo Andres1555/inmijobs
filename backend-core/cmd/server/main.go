@@ -34,6 +34,10 @@ func main() {
 	pingHandler := api.NewPingHandler(*authService)
 	profileHandler := api.NewProfileHandler(*profileService, *authService)
 
+	jobRepository := repository.NewJobRepository(db)
+	jobService := core.NewJobService(jobRepository)
+	jobHandler := api.NewJobHandler(jobService)
+
 	r := chi.NewRouter()
 
 	r.Use(middleware.Recoverer)
@@ -44,6 +48,10 @@ func main() {
 	r.Route("/api", func(r chi.Router) {
 		r.Get("/ping", pingHandler.Ping)
 		r.Put("/profiles/me", profileHandler.UpdateProfile)
+		r.Route("/jobs/{id}", func(r chi.Router) {
+			r.Get("/", jobHandler.GetJobByID)
+			r.Put("/", jobHandler.UpdateJob)
+		})
 	})
 
 	port := ":8080"
