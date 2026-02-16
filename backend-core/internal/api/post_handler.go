@@ -1,18 +1,19 @@
-package posts
+package api
 
 import (
 	"net/http"
 
+	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/core"
 	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/model"
 	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 
 type PostHandler struct {
-	svc PostService
+	svc core.PostService
 }
 
-func NewPostHandler(svc PostService) *PostHandler {
+func NewPostHandler(svc core.PostService) *PostHandler {
 	return &PostHandler{
 		svc: svc,
 	}

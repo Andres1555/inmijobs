@@ -1,7 +1,8 @@
-package posts
+package core
 
 import (
 	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/model"
+	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/repository"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,10 +11,10 @@ type PostService interface {
 }
 
 type postService struct {
-	repo PostRepo
+	repo repository.PostRepo
 }
 
-func NewPostService(repo PostRepo) PostService {
+func NewPostService(repo repository.PostRepo) PostService {
 	return &postService{
 		repo: repo,
 	}
