@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/api"
@@ -64,7 +66,7 @@ func main() {
 		})
 	})
 
-	port := ":8080"
+	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
 	log.Printf("Server starting on port %s", port)
 	if err := http.ListenAndServe(port, r); err != nil {
 		log.Fatalf("Server failed to start: %v", err)

@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { auth } from "../auth";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { env } from "../env";
 
 const app = new Hono();
 
@@ -64,7 +65,7 @@ app.all("*", async (c) => {
 serve(
   {
     fetch: app.fetch,
-    port: 3000,
+    port: env.PORT,
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
