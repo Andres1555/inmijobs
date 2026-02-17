@@ -15,7 +15,7 @@ import (
 
 type PostService interface {
 	UpdatePost(ctx context.Context, postID uint, input model.Post) (model.Post, error)
-	CreatePost(ctx context.Context, req dto.CreatePostRequest) (model.Post, error)
+	CreatePost(ctx context.Context, req dto.CreatePostRequest) (*model.Post, error)
 	GetByID(ctx context.Context, id uint) (*model.Post, error)
 }
 
@@ -29,7 +29,7 @@ func NewPostService(repo repository.PostRepo) PostService {
 	}
 }
 
-func (s *postService) CreatePost(ctx context.Context, req dto.CreatePostRequest) (model.Post, error) {
+func (s *postService) CreatePost(ctx context.Context, req dto.CreatePostRequest) (*model.Post, error) {
 
 	post := model.Post{
 
@@ -44,9 +44,9 @@ func (s *postService) CreatePost(ctx context.Context, req dto.CreatePostRequest)
 
 	if err != nil {
 		slog.Error("[PostService][CreatePost] unable create post", "error", err)
-		return model.Post{}, err
+		return nil, err
 	}
-	return post, nil
+	return &post, nil
 }
 
 func (s *postService) UpdatePost(ctx context.Context, postID uint, p model.Post) (model.Post, error) {

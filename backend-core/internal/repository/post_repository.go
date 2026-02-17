@@ -24,15 +24,15 @@ func NewPostRepository(db *gorm.DB) PostRepo {
 func (r *postRepository) GetByID(ctx context.Context, id uint) (*model.Post, error) {
 	var post model.Post
 
-    err := r.db.WithContext(ctx).
-        Preload("Images").
-        Preload("Company").
-        Preload("User").
-        Preload("Job").
-        Preload("Comments").Preload("Comments.User").
-        Preload("Interactions").
-        First(&post, id).Error
-    return &post, err
+	err := r.db.WithContext(ctx).
+		Preload("Images").
+		Preload("Company").
+		Preload("User").
+		Preload("Job").
+		Preload("Comments").Preload("Comments.User").
+		Preload("Interactions").
+		First(&post, id).Error
+	return &post, err
 }
 
 func (r *postRepository) EditPost(ctx context.Context, postID uint, p model.Post) (model.Post, error) {
@@ -78,7 +78,7 @@ func (r *postRepository) EditPost(ctx context.Context, postID uint, p model.Post
 }
 func (r *postRepository) CreatePost(ctx context.Context, post *model.Post) error {
 	if err := r.db.WithContext(ctx).Create(post).Error; err != nil {
-        return err
-    }
-    return nil
+		return err
+	}
+	return nil
 }
