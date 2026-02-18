@@ -54,13 +54,20 @@ func (h *PostHandler) EditPost(w http.ResponseWriter, r *http.Request) {
 
 func (p PostHandler) CreatePost(w http.ResponseWriter, r *http.Request) {
 
+	//Get user ID from the header
+	// user, err := h.authService.UserFromHeader(r.Context(), r.Header)
+	// if err != nil {
+	// 	utils.RespondError(w, http.StatusUnauthorized, "Unauthorized")
+	// 	return
+	// }
+
 	var req dto.CreatePostRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		utils.RespondError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
 
-	req.UserID = "user_test_123"
+	// req.UserID = "user_test_123" --> remove later
 
 	createdPost, err := p.svc.CreatePost(r.Context(), req)
 	if err != nil {
