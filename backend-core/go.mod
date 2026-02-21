@@ -4,8 +4,10 @@ go 1.25.6
 
 require (
 	github.com/gin-gonic/gin v1.11.0
+	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/go-chi/chi/v5 v5.2.4
 	github.com/go-chi/httprate v0.15.0
+	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1
 	github.com/lestrrat-go/jwx/v3 v3.0.13
 	github.com/tursodatabase/libsql-client-go v0.0.0-20251219100830-236aa1ff8acc

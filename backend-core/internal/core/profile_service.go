@@ -53,3 +53,18 @@ func (s ProfileService) UpdateProfile(ctx context.Context, userID string, req dt
 func (s ProfileService) GetProfile(ctx context.Context, userID string) (model.Profile, error) {
 	return s.profileRepository.GetProfileByUserID(ctx, userID)
 }
+
+func (s ProfileService) GetFullProfileData(ctx context.Context, userID string) (model.User, *model.Profile, error) {
+
+	user, err := s.profileRepository.GetUserByID(ctx, userID)
+	if err != nil {
+		return model.User{}, nil, err
+	}
+
+	profile, err := s.profileRepository.GetProfileByUserID(ctx, userID)
+	if err != nil {
+		return user, nil, nil
+	}
+	
+	return user, &profile, nil
+}

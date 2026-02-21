@@ -7,7 +7,7 @@ export class Service {
 
   constructor(basePath: string) {
     try {
-      const url = new URL("http://localhost:3000" + basePath);
+      const url = new URL(import.meta.env.BACKEND_URL + basePath);
       this.basePath = url.toString();
       this.client = ky.extend({
         prefixUrl: url.toString(),

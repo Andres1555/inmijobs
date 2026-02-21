@@ -13,3 +13,11 @@ type ProfileResponse struct {
 	Title     *string `json:"title,omitempty"`
 	Location  *string `json:"location,omitempty"`
 }
+
+type CombinedProfileResponse struct {
+	Name      string  `json:"name"`
+	Image     *string `json:"image"`
+	Location  *string `json:"location,omitempty"`
+	Biography *string `json:"biography,omitempty"`
+	Title     *string `json:"title,omitempty"`
+}

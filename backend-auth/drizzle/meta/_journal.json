@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1771111277827,
+      "tag": "0000_hot_skreet",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1771133895001,
+      "tag": "0001_cultured_squirrel_girl",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1771159595186,
+      "tag": "0002_sour_carnage",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1771159844066,
+      "tag": "0003_nifty_steve_rogers",
+      "breakpoints": true
+    }
+  ]
+}

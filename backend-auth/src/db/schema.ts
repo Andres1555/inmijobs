@@ -83,5 +83,21 @@ export const profiles = sqliteTable("profiles", {
     .notNull(),
   updatedAt: integer("updated_at", { mode: "timestamp" })
     .$defaultFn(() => /* @__PURE__ */ new Date())
+});
+
+export const connections = sqliteTable("connections", {
+  id: text("id").primaryKey(),
+  requesterId: text("requester_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  receiverId: text("receiver_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  status: text("status").$type<"pending" | "accepted" | "blocked">().default("pending").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
     .notNull(),
 });
