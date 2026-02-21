@@ -67,8 +67,6 @@ func (p PostHandler) CreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// req.UserID = "user_test_123" --> remove later
-
 	createdPost, err := p.svc.CreatePost(r.Context(), req)
 	if err != nil {
 		utils.RespondError(w, http.StatusInternalServerError, "Failed to create post")
@@ -125,3 +123,4 @@ func (p PostHandler) DeletePost(w http.ResponseWriter, r *http.Request) {
 
 	utils.RespondJSON(w, http.StatusOK, post)
 }
+
