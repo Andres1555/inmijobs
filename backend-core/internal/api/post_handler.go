@@ -14,12 +14,14 @@ import (
 )
 
 type PostHandler struct {
-	svc core.PostService
+	svc         core.PostService
+	authService core.AuthService
 }
 
-func NewPostHandler(svc core.PostService) *PostHandler {
+func NewPostHandler(svc core.PostService, as core.AuthService) *PostHandler {
 	return &PostHandler{
-		svc: svc,
+		svc:         svc,
+		authService: as,
 	}
 }
 
@@ -53,13 +55,11 @@ func (h *PostHandler) EditPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p PostHandler) CreatePost(w http.ResponseWriter, r *http.Request) {
-
-	//Get user ID from the header
-	// user, err := h.authService.UserFromHeader(r.Context(), r.Header)
-	// if err != nil {
-	// 	utils.RespondError(w, http.StatusUnauthorized, "Unauthorized")
-	// 	return
-	// }
+	_, err := p.authService.UserFromHeader(r.Context(), r.Header)
+	if err != nil {
+		utils.RespondError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
 
 	var req dto.CreatePostRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -101,12 +101,11 @@ func (h *PostHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 
 func (p PostHandler) DeletePost(w http.ResponseWriter, r *http.Request) {
 
-	//Get user ID from the header
-	// user, err := h.authService.UserFromHeader(r.Context(), r.Header)
-	// if err != nil {
-	// 	utils.RespondError(w, http.StatusUnauthorized, "Unauthorized")
-	// 	return
-	// }
+	_, err := p.authService.UserFromHeader(r.Context(), r.Header)
+	if err != nil {
+		utils.RespondError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
 
 	idParam := chi.URLParam(r, "id")
 	id, err := strconv.ParseUint(idParam, 10, 32)
@@ -123,4 +122,3 @@ func (p PostHandler) DeletePost(w http.ResponseWriter, r *http.Request) {
 
 	utils.RespondJSON(w, http.StatusOK, post)
 }
-

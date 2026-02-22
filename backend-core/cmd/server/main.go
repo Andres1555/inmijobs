@@ -40,11 +40,11 @@ func main() {
 
 	postRepository := repository.NewPostRepository(db)
 	postService := core.NewPostService(postRepository)
-	postHandler := api.NewPostHandler(postService)
+	postHandler := api.NewPostHandler(postService, *authService)
 
 	interactionRepository := repository.NewInteractionRepository(db)
 	interactionService := core.NewInteractionService(interactionRepository)
-	interactionHandler := api.NewInteractionHandler(interactionService) 
+	interactionHandler := api.NewInteractionHandler(interactionService)
 	r := chi.NewRouter()
 
 	r.Use(middleware.Recoverer)
