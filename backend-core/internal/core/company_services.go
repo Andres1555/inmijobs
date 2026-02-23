@@ -1,6 +1,8 @@
 package core
 
 import (
+	"context"
+
 	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/dto"
 	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/model"
 	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/repository"
@@ -84,4 +86,9 @@ func (s *CompanyService) GetCompany(id string) (*dto.CompanyResponse, error) {
 	}
 
 	return res, nil
+}
+
+// CompanyFinder returns jobs filtered by company criteria (delegates to repository)
+func (s *CompanyService) CompanyFinder(ctx context.Context, filter dto.CompanyFilterDto) ([]model.Job, int64, error) {
+	return s.repo.CompanyFinder(ctx, filter)
 }

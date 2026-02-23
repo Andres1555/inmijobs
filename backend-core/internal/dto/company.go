@@ -45,3 +45,10 @@ type LocationResponse struct {
 	Country string `json:"country"`
 	IsHQ    bool   `json:"is_hq"`
 }
+
+type CompanyFilterDto struct {
+	Page   int     `json:"page" form:"page,default=1"`
+	Limit  int     `json:"limit" form:"limit,default=10"`
+	Name   *string `json:"name" form:"name"`
+	UserId *string `json:"user_id" form:"userId"`
+}
