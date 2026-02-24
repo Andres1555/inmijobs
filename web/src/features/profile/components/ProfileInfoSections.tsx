@@ -1,7 +1,7 @@
 import { 
-    MapPin, Home, Cake, Heart, Users, User as UserIcon, MessageSquare, Globe, 
-    Briefcase, GraduationCap, Gamepad2, Tv, Music, Clapperboard, Shirt, 
-    Plane, Link as LinkIcon, Phone, Mail, Lock, Pencil, Hand, Pin, Plus, Mic
+    Briefcase, Cake, Clapperboard, Gamepad2, Globe, GraduationCap, Hand, 
+    Heart, Home, Link as LinkIcon, Lock, Mail, MapPin, MessageSquare, Mic, 
+    Music, Pencil, Phone, Pin, Plane, Plus, Shirt, Tv, User as UserIcon, Users 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -24,7 +24,8 @@ function InfoRow({ icon: Icon, label, value, subValue, action, rightElement }: I
             </div>
 
             {/* Contenido Central */}
-            <div className="flex-1 min-w-0 flex flex-col justify-center min-h-[2.25rem]">
+            {/* Corregido: min-h-[2.25rem] -> min-h-9 */}
+            <div className="flex-1 min-w-0 flex flex-col justify-center min-h-9">
                 {label && <p className="text-sm font-semibold text-foreground mb-0.5">{label}</p>}
                 
                 <div className={`${action ? 'text-blue-600 group-hover:underline font-medium' : 'text-foreground text-sm'}`}>
@@ -171,9 +172,8 @@ export function HobbiesSection() {
     return (
         <div className="animate-in fade-in">
             <h3 className="text-lg font-bold mb-4">Pasatiempos</h3>
-            <InfoRow icon={Gamepad2} value="Pasatiempos" icon={Heart} /> 
-            {/* Nota: Usé Heart porque en tu captura el icono es un corazón+cuadrado, 
-                pero puedes usar Gamepad2 u otro */}
+            {/* Corregido: Eliminado atributo icon duplicado */}
+            <InfoRow icon={Heart} value="Pasatiempos" /> 
         </div>
     );
 }
@@ -288,9 +288,6 @@ export function NamesSection() {
                     </div>
                 </div>
             </div>
-
-            {/* Separador visual si lo deseas */}
-            {/* <hr className="border-border" /> */}
 
             {/* Bloque 2: Otros nombres */}
             <div>

@@ -90,7 +90,7 @@ function ProfilePage() {
         })}
       </div>
 
-      <div className="min-h-[400px] transition-all">
+      <div className="min-h-100 transition-all">
         {renderTabContent()}
       </div>
     </div>
