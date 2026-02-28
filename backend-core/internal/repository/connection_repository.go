@@ -49,3 +49,27 @@ func (r *ConnectionRepository) Delete(id string) error {
 	return nil
 }
 
+func (r *ConnectionRepository) GetConnections(userID string, status string, page int, limit int) ([]model.Connection, int64, error) {
+	var connections []model.Connection
+	var total int64
+
+	query := r.db.Model(&model.Connection{}).
+		Preload("Requester").
+		Preload("Receiver").
+		Where("requester_id = ? OR receiver_id = ?", userID, userID)
+
+	if status != "" {
+		query = query.Where("status = ?", status)
+	}
+
+	if err := query.Count(&total).Error; err != nil {
+		return nil, 0, err
+	}
+
+	offset := (page - 1) * limit
+	if err := query.Offset(offset).Limit(limit).Find(&connections).Error; err != nil {
+		return nil, 0, err
+	}
+
+	return connections, total, nil
+}

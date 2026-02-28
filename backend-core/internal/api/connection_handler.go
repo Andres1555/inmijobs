@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/core"
 	"github.com/Gabo-div/bingo/inmijobs/backend-core/internal/model"
@@ -90,3 +91,41 @@ func (h *ConnectionHandler) DeleteConnection(w http.ResponseWriter, r *http.Requ
 	utils.RespondJSON(w, http.StatusNoContent, nil)
 }
 
+func (h *ConnectionHandler) GetConnections(w http.ResponseWriter, r *http.Request) {
+	user, err := h.authService.UserFromHeader(r.Context(), r.Header)
+	if err != nil {
+		utils.RespondError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	status := r.URL.Query().Get("status")
+
+	pageStr := r.URL.Query().Get("page")
+	page := 1
+	if pageStr != "" {
+		if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
+			page = p
+		}
+	}
+
+	limitStr := r.URL.Query().Get("limit")
+	limit := 10
+	if limitStr != "" {
+		if l, err := strconv.Atoi(limitStr); err == nil && l > 0 {
+			limit = l
+		}
+	}
+
+	connections, total, err := h.repo.GetConnections(user.ID, status, page, limit)
+	if err != nil {
+		utils.RespondError(w, http.StatusInternalServerError, "Failed to get connections")
+		return
+	}
+
+	utils.RespondJSON(w, http.StatusOK, map[string]interface{}{
+		"data":  connections,
+		"total": total,
+		"page":  page,
+		"limit": limit,
+	})
+}
