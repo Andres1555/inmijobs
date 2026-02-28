@@ -38,6 +38,7 @@ type JobFilters struct {
 	MinSalary      int
 	MaxSalary      int
 	Sector         string
+	UserId         string
 }
 
 func (r *JobRepository) GetAllJobs(ctx context.Context, filters JobFilters, page, limit int) ([]model.Job, int64, error) {
@@ -46,6 +47,9 @@ func (r *JobRepository) GetAllJobs(ctx context.Context, filters JobFilters, page
 
 	if filters.Location != "" {
 		query = query.Where("location LIKE ?", "%"+filters.Location+"%")
+	}
+	if filters.UserId != "" {
+		query = query.Where("recruiter_id = ?", filters.UserId)
 	}
 	if filters.EmploymentType != "" {
 		query = query.Where("employment_type = ?", filters.EmploymentType)

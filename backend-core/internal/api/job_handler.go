@@ -62,7 +62,7 @@ func (h *JobHandler) GetJobs(w http.ResponseWriter, r *http.Request) {
 	minSalaryStr := r.URL.Query().Get("minSalary")
 	maxSalaryStr := r.URL.Query().Get("maxSalary")
 	sector := r.URL.Query().Get("sector")
-
+	userId := r.URL.Query().Get("userId")
 	page, _ := strconv.Atoi(pageStr)
 	limit, _ := strconv.Atoi(limitStr)
 	minSalary, _ := strconv.Atoi(minSalaryStr)
@@ -74,6 +74,7 @@ func (h *JobHandler) GetJobs(w http.ResponseWriter, r *http.Request) {
 		MinSalary:      minSalary,
 		MaxSalary:      maxSalary,
 		Sector:         sector,
+		UserId:         userId,
 	}
 
 	jobs, total, err := h.jobService.GetAllJobs(r.Context(), filters, page, limit)

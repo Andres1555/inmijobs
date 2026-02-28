@@ -38,10 +38,25 @@ type CompanyResponse struct {
 	Locations   []LocationResponse `json:"locations,omitempty"`
 }
 
+type PaginatedCompanyResponse struct {
+	Companies  []CompanyResponse `json:"data"`
+	Total      int64             `json:"total"`
+	Page       int               `json:"page"`
+	Limit      int               `json:"limit"`
+	TotalPages int               `json:"totalPages"`
+}
+
 type LocationResponse struct {
 	ID      string `json:"id"`
 	Address string `json:"address"`
 	City    string `json:"city"`
 	Country string `json:"country"`
 	IsHQ    bool   `json:"is_hq"`
+}
+
+type CompanyFilterDto struct {
+	Page   int     `json:"page" form:"page,default=1"`
+	Limit  int     `json:"limit" form:"limit,default=10"`
+	Name   *string `json:"name" form:"name"`
+	UserId *string `json:"user_id" form:"userId"`
 }

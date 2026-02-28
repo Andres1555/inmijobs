@@ -95,6 +95,7 @@ func main() {
 
 		r.Route("/companies", func(r chi.Router) {
 			r.Post("/", companyHandler.Create)
+			r.Get("/", companyHandler.CompanyFinder)
 			r.Get("/{id}", companyHandler.GetByID)
 			r.Put("/{id}", jobHandler.UpdateCompany)
 		})
