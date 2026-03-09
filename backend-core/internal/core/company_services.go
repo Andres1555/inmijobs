@@ -36,10 +36,10 @@ func (s *CompanyService) CreateCompany(req dto.CreateCompanyRequest, userID stri
 
 	for _, l := range req.Locations {
 		company.Locations = append(company.Locations, model.Location{
-			ID:        utils.NewID(),
-			Address:   l.Address,
-			City:      l.City,
-			Country:   l.Country,
+			ID: utils.NewID(),
+			// CAMBIO: Coordenadas en lugar de Address/City/Country
+			Latitude:  l.Latitude,
+			Longitude: l.Longitude,
 			IsHQ:      l.IsHQ,
 			CompanyID: companyID,
 		})
@@ -77,11 +77,11 @@ func (s *CompanyService) GetCompany(id string) (*dto.CompanyResponse, error) {
 
 	for _, l := range m.Locations {
 		res.Locations = append(res.Locations, dto.LocationResponse{
-			ID:      l.ID,
-			Address: l.Address,
-			City:    l.City,
-			Country: l.Country,
-			IsHQ:    l.IsHQ,
+			ID: l.ID,
+			// CAMBIO: Coordenadas en lugar de Address/City/Country
+			Latitude:  l.Latitude,
+			Longitude: l.Longitude,
+			IsHQ:      l.IsHQ,
 		})
 	}
 

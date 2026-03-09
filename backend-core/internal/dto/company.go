@@ -1,10 +1,10 @@
 package dto
 
 type CreateLocationRequest struct {
-	Address string `json:"address"`
-	City    string `json:"city"`
-	Country string `json:"country"`
-	IsHQ    bool   `json:"is_hq"`
+	// CAMBIO: Ahora usamos coordenadas en lugar de Address/City/Country
+	Latitude  *float64 `json:"latitude"`  // Puntero para que sea opcional
+	Longitude *float64 `json:"longitude"` // Puntero para que sea opcional
+	IsHQ      bool     `json:"is_hq"`
 }
 
 type CreateCompanyRequest struct {
@@ -47,11 +47,11 @@ type PaginatedCompanyResponse struct {
 }
 
 type LocationResponse struct {
-	ID      string `json:"id"`
-	Address string `json:"address"`
-	City    string `json:"city"`
-	Country string `json:"country"`
-	IsHQ    bool   `json:"is_hq"`
+	ID string `json:"id"`
+	// CAMBIO: Reflejamos el cambio a coordenadas también en la respuesta
+	Latitude  *float64 `json:"latitude"`
+	Longitude *float64 `json:"longitude"`
+	IsHQ      bool     `json:"is_hq"`
 }
 
 type CompanyFilterDto struct {

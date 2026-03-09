@@ -1,13 +1,15 @@
-
 package model
 
 type Status string
 
 type Job struct {
-	ID             string `gorm:"primaryKey"`
-	Title          string `gorm:"not null"`
-	Description    string `gorm:"type:text;not null"`
-	Location       string `gorm:"not null"`
+	ID          string `gorm:"primaryKey"`
+	Title       string `gorm:"not null"`
+	Description string `gorm:"type:text;not null"`
+
+	LocationID *string   `json:"location_id"`
+	Location   *Location `gorm:"foreignKey:LocationID" json:"location"`
+
 	SalaryMin      *int
 	SalaryMax      *int
 	EmploymentType string   `gorm:"not null"`
@@ -40,4 +42,3 @@ type Application struct {
 	JobID string `gorm:"not null;index"`
 	Job   Job    `gorm:"foreignKey:JobID"`
 }
-

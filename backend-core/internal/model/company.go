@@ -26,10 +26,9 @@ type Company struct {
 }
 
 type Location struct {
-	ID        string `gorm:"primaryKey"`
-	Address   string `gorm:"not null"`
-	City      string `gorm:"not null"`
-	Country   string `gorm:"not null"`
-	IsHQ      bool   `gorm:"default:false"`
-	CompanyID string `gorm:"not null;index"`
+	ID        string   `gorm:"primaryKey"`
+	Latitude  *float64 `gorm:"type:decimal(10,8)" json:"latitude"`  // Puntero para que sea opcional
+	Longitude *float64 `gorm:"type:decimal(11,8)" json:"longitude"` // Puntero para que sea opcional
+	IsHQ      bool     `gorm:"default:false"`
+	CompanyID string   `gorm:"not null;index"`
 }

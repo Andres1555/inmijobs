@@ -19,14 +19,24 @@ func NewJobRepository(db gorm.DB) *JobRepository {
 
 func (r *JobRepository) GetJobByID(ctx context.Context, jobID string) (*model.Job, error) {
 	var job model.Job
-	if err := r.db.WithContext(ctx).Preload("Company").Preload("Company.Owner").First(&job, "id = ?", jobID).Error; err != nil {
+	// CAMBIO: Preload("Location") para traer las coordenadas
+	if err := r.db.WithContext(ctx).
+		Preload("Location").
+		Preload("Company").
+		Preload("Company.Owner").
+		First(&job, "id = ?", jobID).Error; err != nil {
 		return nil, err
 	}
 	return &job, nil
 }
 
 func (r *JobRepository) UpdateJob(ctx context.Context, jobID string, job *model.Job) error {
-	if err := r.db.WithContext(ctx).Model(&model.Job{}).Where("id = ?", jobID).Updates(job).Error; err != nil {
+
+	if err := r.db.WithContext(ctx).
+		Session(&gorm.Session{FullSaveAssociations: true}).
+		Model(&model.Job{}).
+		Where("id = ?", jobID).
+		Updates(job).Error; err != nil {
 		return err
 	}
 	return nil
@@ -45,9 +55,8 @@ func (r *JobRepository) GetAllJobs(ctx context.Context, filters JobFilters, page
 	offset := (page - 1) * limit
 	query := r.db.WithContext(ctx).Model(&model.Job{}).Where("is_active = ?", true)
 
-	if filters.Location != "" {
-		query = query.Where("location LIKE ?", "%"+filters.Location+"%")
-	}
+	// CAMBIO: Se elimina el filtro LIKE "location" porque ahora la columna es numérica (o una relación)
+	// y un string LIKE fallaría en la base de datos.
 	if filters.UserId != "" {
 		query = query.Where("recruiter_id = ?", filters.UserId)
 	}
@@ -72,6 +81,7 @@ func (r *JobRepository) GetAllJobs(ctx context.Context, filters JobFilters, page
 
 	var jobs []model.Job
 	err := query.
+		Preload("Location"). // CAMBIO: Traer coordenadas en la lista
 		Preload("Company").
 		Order("created_at DESC").
 		Limit(limit).

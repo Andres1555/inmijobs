@@ -32,6 +32,12 @@ func (s *JobService) GetJobByID(ctx context.Context, jobID string) (*model.Job, 
 }
 
 func (s *JobService) UpdateJob(ctx context.Context, jobID string, job *model.Job) error {
+	// --- CAMBIO: Si el job trae una ubicación nueva, generamos su ID ---
+	if job.Location != nil && job.Location.ID == "" {
+		job.Location.ID = uuid.New().String()
+	}
+	// -----------------------------------------------------------------
+
 	return s.jobRepository.UpdateJob(ctx, jobID, job)
 }
 

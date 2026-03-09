@@ -86,11 +86,11 @@ func (h *CompanyHandler) CompanyFinder(w http.ResponseWriter, r *http.Request) {
 		locationDtos := make([]dto.LocationResponse, len(company.Locations))
 		for j, loc := range company.Locations {
 			locationDtos[j] = dto.LocationResponse{
-				ID:      loc.ID,
-				Address: loc.Address,
-				City:    loc.City,
-				Country: loc.Country,
-				IsHQ:    loc.IsHQ,
+				ID: loc.ID,
+				// CAMBIO: Se usan coordenadas en lugar de Address/City/Country
+				Latitude:  loc.Latitude,
+				Longitude: loc.Longitude,
+				IsHQ:      loc.IsHQ,
 			}
 		}
 

@@ -1,10 +1,13 @@
 package dto
 
 type JobDTO struct {
-	ID             string     `json:"id"`
-	Title          string     `json:"title"`
-	Description    string     `json:"description"`
-	Location       string     `json:"location"`
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+
+	// CAMBIO: Antes era 'string', ahora es un puntero al objeto de coordenadas
+	Location *LocationResponse `json:"location"`
+
 	Company        CompanyDTO `json:"company"`
 	SalaryMin      *int       `json:"salaryMin,omitempty"`
 	SalaryMax      *int       `json:"salaryMax,omitempty"`

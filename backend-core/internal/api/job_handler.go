@@ -45,6 +45,7 @@ func (h *JobHandler) UpdateJob(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// req.ToModel() ya debe estar actualizado para manejar coordenadas
 	if err := h.jobService.UpdateJob(r.Context(), jobID, req.ToModel()); err != nil {
 		utils.RespondError(w, http.StatusInternalServerError, "Failed to update job")
 		return
@@ -85,11 +86,22 @@ func (h *JobHandler) GetJobs(w http.ResponseWriter, r *http.Request) {
 
 	jobDTOs := make([]dto.JobDTO, len(jobs))
 	for i, job := range jobs {
+
+		// --- CAMBIO: Mapeo de coordenadas (Latitude/Longitude) ---
+		var locRes *dto.LocationResponse
+		if job.Location != nil {
+			locRes = &dto.LocationResponse{
+				ID:        job.Location.ID,
+				Latitude:  job.Location.Latitude,
+				Longitude: job.Location.Longitude,
+			}
+		}
+
 		jobDTOs[i] = dto.JobDTO{
 			ID:          job.ID,
 			Title:       job.Title,
 			Description: job.Description,
-			Location:    job.Location,
+			Location:    locRes, // Ahora es un objeto de coordenadas o nil (opcional)
 			Company: dto.CompanyDTO{
 				ID:          job.Company.ID,
 				Name:        job.Company.Name,

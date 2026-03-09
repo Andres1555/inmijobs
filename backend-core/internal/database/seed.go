@@ -161,17 +161,28 @@ func Seed(db *gorm.DB) {
 			salaryMin := gofakeit.Number(30000, 60000)
 			salaryMax := gofakeit.Number(salaryMin, 120000)
 
+			// --- CAMBIO PARA LOCATION ---
+			lat := gofakeit.Latitude()
+			lon := gofakeit.Longitude()
+
 			job := model.Job{
-				ID:             utils.NewID(),
-				Title:          gofakeit.JobTitle(),
-				Description:    gofakeit.Paragraph(3, 7, 15, ""),
-				Location:       gofakeit.Address().City + ", " + gofakeit.Address().Country,
+				ID:          utils.NewID(),
+				Title:       gofakeit.JobTitle(),
+				Description: gofakeit.Paragraph(3, 7, 15, ""),
+				// Se crea el objeto Location con coordenadas aleatorias
+				Location: &model.Location{
+					ID:        utils.NewID(),
+					Latitude:  &lat,
+					Longitude: &lon,
+					CompanyID: company.ID,
+				},
 				SalaryMin:      toPtr(salaryMin),
 				SalaryMax:      toPtr(salaryMax),
 				EmploymentType: gofakeit.RandomString(employmentTypes),
 				IsActive:       gofakeit.Bool(),
 				CompanyID:      company.ID,
-				RecruiterID:    company.UserID, // Assign the company's UserID as the RecruiterID
+				RecruiterID:    company.UserID,
+				Status:         "active", // Campo not null
 			}
 
 			result := db.Clauses(clause.OnConflict{
@@ -215,7 +226,7 @@ func Seed(db *gorm.DB) {
 			}
 		}
 	}
-	
+
 	slog.Info("[Database] Seeded applications", "count", len(seededJobs)*10)
 
 }
